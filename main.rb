@@ -52,6 +52,13 @@ post '/callback' do
         }
         puts message #message出せるかな
         client.reply_message(event['replyToken'], message)
+      when Line::Bot::Event::MessageType::Sticker
+        message = {
+          type: 'text',
+          text: 'これはスタンプですね'
+        }
+        client.reply_message(event['replyToken'], message)
+
       end
     end
   }
