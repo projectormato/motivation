@@ -28,12 +28,10 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text #文章が送られてきた時
-
         message = {
           type: 'text',
           text: 'こんにちは'
         }
-
         #puts message #message出せるかな
         client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video #画像やビデオが送られてきたとき
