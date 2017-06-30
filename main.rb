@@ -33,7 +33,6 @@ post '/callback' do
           type: 'text',
           text: 'こんにちは'
         }
-        byebug
 
         #puts message #message出せるかな
         client.reply_message(event['replyToken'], message)
