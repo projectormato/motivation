@@ -15,10 +15,6 @@ end
 
 post '/callback' do
   body = request.body.read
-
-  File.open("log.txt", "a") do |f| #ログが欲しい
-  f.puts("入力された値は" + body + "でした")
-  end
   
   #puts body #body出せるかな
   signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -37,10 +33,7 @@ post '/callback' do
           type: 'text',
           text: 'こんにちは'
         }
-        File.open("log.txt", "a") do |f| #ログが欲しい
-          f.puts("入力された文字列は" + event.text + "でした")
-          f.puts("入力されたidは" + event.id + "でした")
-        end
+        byebug
 
         #puts message #message出せるかな
         client.reply_message(event['replyToken'], message)
