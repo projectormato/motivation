@@ -32,7 +32,7 @@ post '/callback' do
         case event.message['text']
         when "こんにちは"
           reply = "こんにちは！"
-        when /(.*)が終わった.*/
+        when /(.*)が終わった.*/ or /(.*)ができた.*/ or /(.*)が済んだ.*/
           reply =  "#{$1}が終わったのね、すごい！"
         end
         message = {
