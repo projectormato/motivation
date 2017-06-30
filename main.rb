@@ -15,7 +15,8 @@ end
 
 post '/callback' do
   body = request.body.read
-
+  
+  #puts body #body出せるかな
   signature = request.env['HTTP_X_LINE_SIGNATURE']
   unless client.validate_signature(body, signature)
     error 400 do 'Bad Request' end
@@ -26,16 +27,23 @@ post '/callback' do
     case event
     when Line::Bot::Event::Message
       case event.type
-      when Line::Bot::Event::MessageType::Text
+      when Line::Bot::Event::MessageType::Text #文章が送られてきた時
         message = {
           type: 'text',
-          text: event.message['text']
+          text: 'こんにちは'
         }
+        #puts message #message出せるかな
         client.reply_message(event['replyToken'], message)
-      when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
+      when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video #画像やビデオが送られてきたとき
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
         tf.write(response.body)
+        message = {
+          type: 'text',
+          text: 'これは画像ですね'
+        }
+        puts message #message出せるかな
+        client.reply_message(event['replyToken'], message)
       end
     end
   }
