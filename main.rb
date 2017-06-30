@@ -15,7 +15,7 @@ end
 
 post '/callback' do
   body = request.body.read
-
+  p body #body出せるかな
   signature = request.env['HTTP_X_LINE_SIGNATURE']
   unless client.validate_signature(body, signature)
     error 400 do 'Bad Request' end
@@ -31,6 +31,7 @@ post '/callback' do
           type: 'text',
           text: event.message['text']
         }
+        p message
         client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
         response = client.get_message_content(event.message['id'])
