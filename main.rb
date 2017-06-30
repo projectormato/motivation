@@ -32,7 +32,7 @@ post '/callback' do
         case event.message['text']
         when "こんにちは"
           reply = "こんにちは！"
-        when /(.*)が終わった.*/ or /(.*)ができた.*/ or /(.*)が済んだ.*/
+        when /(.*)が終わった.*/, /(.*)ができた.*/, /(.*)が済んだ.*/
           reply =  "#{$1}が終わったのね、すごい！"
         end
         message = {
@@ -58,7 +58,6 @@ post '/callback' do
           text: 'これはスタンプですね'
         }
         client.reply_message(event['replyToken'], message)
-
       end
     end
   }
