@@ -37,7 +37,7 @@ post '/callback' do
         end
         message = {
           type: 'text',
-          text: events.to_s
+          text: reply
         }
 
         pmessage = {
@@ -58,7 +58,6 @@ post '/callback' do
           type: 'text',
           text: 'これは画像ですね'
         }
-        puts message #message出せるかな
         client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Sticker
         message = {
