@@ -11,7 +11,7 @@ def client
     config.channel_secret = ENV['LINE_CHANNEL_SECRET']
     config.channel_token = ENV['LINE_CHANNEL_TOKEN']
   }
-end
+end   
 
 post '/callback' do
   body = request.body.read
@@ -48,7 +48,7 @@ post '/callback' do
 
         #puts message #message出せるかな
         #puts event.message['text'] #送られてきたメッセージ
-        client.push_message(event['userId'], pmessage)
+        # client.push_message(event['source']['userId'], pmessage)
         client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video #画像やビデオが送られてきたとき
         response = client.get_message_content(event.message['id'])
@@ -58,7 +58,6 @@ post '/callback' do
           type: 'text',
           text: 'これは画像ですね'
         }
-        puts message #message出せるかな
         client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Sticker
         message = {
@@ -72,3 +71,13 @@ post '/callback' do
 
   "OK"
 end
+
+post '/push' do
+  id = ENV['UserId']
+
+  pmessage = {
+          type: 'text',
+          text: "今日のタスクは、ToDoです。応援してる！！"
+  }
+  client.push_message(id, pmessage)
+end 
