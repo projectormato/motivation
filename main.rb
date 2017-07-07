@@ -37,7 +37,7 @@ post '/callback' do
         end
         message = {
           type: 'text',
-          text: events
+          text: events.to_s
         }
 
         pmessage = {
