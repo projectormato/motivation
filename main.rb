@@ -74,11 +74,11 @@ post '/callback' do
 end
 
 post '/push' do
-  id = "Uc11fdb11b57699c5636a5e60baf963f6"
+  id = ENV['UserId']
 
   pmessage = {
           type: 'text',
-          text: "応援してる"
+          text: "今日のタスクは、ToDoです。応援してる！！"
   }
   client.push_message(id, pmessage)
 end 
