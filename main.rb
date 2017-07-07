@@ -11,7 +11,7 @@ def client
     config.channel_secret = ENV['LINE_CHANNEL_SECRET']
     config.channel_token = ENV['LINE_CHANNEL_TOKEN']
   }
-end
+end   
 
 post '/callback' do
   body = request.body.read
@@ -37,7 +37,7 @@ post '/callback' do
         end
         message = {
           type: 'text',
-          text: reply
+          text: events.to_s
         }
 
         pmessage = {
