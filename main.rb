@@ -72,3 +72,13 @@ post '/callback' do
 
   "OK"
 end
+
+post '/push' do
+  id = "Uc11fdb11b57699c5636a5e60baf963f6"
+
+  pmessage = {
+          type: 'text',
+          text: "応援してる"
+  }
+  client.push_message(id, pmessage)
+end 
