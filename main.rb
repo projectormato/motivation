@@ -28,15 +28,23 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text #文章が送られてきた時
+        type = 'text'
         reply = "default"
         case event.message['text']
         when "こんにちは"
           reply = "こんにちは！"
         when /(.*)が終わった.*/, /(.*)ができた.*/, /(.*)が済んだ.*/
           reply =  "#{$1}が終わったのね、すごい！"
+        when "画像で褒めて"
+          message = {
+            type = 'image'
+            originalContentUrl:'https://www.google.co.jp/search?q=%E8%8A%B1%E7%81%AB&source=lnms&tbm=isch&sa=X&ved=0ahUKEwj7-a6bxPzUAhWIW5QKHWICCdEQ_AUIBygC&biw=1395&bih=796#imgrc=UTP1YGG-4okmZM:'
+            previewImageUrl:'https://www.google.co.jp/search?q=%E8%8A%B1%E7%81%AB&source=lnms&tbm=isch&sa=X&ved=0ahUKEwj7-a6bxPzUAhWIW5QKHWICCdEQ_AUIBygC&biw=1395&bih=796#imgrc=UTP1YGG-4okmZM:'
+          }
+          client.reply_message(event['replyToken'], message)
         end
         message = {
-          type: 'text',
+          type: type,
           text: reply
         }
 
