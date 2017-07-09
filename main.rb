@@ -38,8 +38,8 @@ post '/callback' do
         when "画像で褒めて"
           message = {
             type: 'image',
-            originalContentUrl: './cute.ping',
-            previewImageUrl: './cute.ping'
+            originalContentUrl: './cute.png',
+            previewImageUrl: './cute.png'
           }
           client.reply_message(event['replyToken'], message)
         end
