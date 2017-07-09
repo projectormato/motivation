@@ -38,8 +38,8 @@ post '/callback' do
         when "画像で褒めて"
           message = {
             type: 'image',
-            originalContentUrl: './cute.png',
-            previewImageUrl: './cute.png'
+            originalContentUrl: 'http://netnewslabo.com/wp-content/uploads/2014/05/kanna.png',
+            previewImageUrl: 'http://netnewslabo.com/wp-content/uploads/2014/05/kanna.png'
           }
           client.reply_message(event['replyToken'], message)
         end
