@@ -37,8 +37,8 @@ post '/callback' do
           reply =  "#{$1}が終わったのね、すごい！"
         when "画像で褒めて"
           message = {
-            type = 'image'
-            originalContentUrl: './cute.ping'
+            type = 'image',
+            originalContentUrl: './cute.ping',
             previewImageUrl: './cute.ping'
           }
           client.reply_message(event['replyToken'], message)
