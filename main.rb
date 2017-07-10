@@ -49,7 +49,7 @@ post '/callback' do
           type: 'text',
           text: "ふぁいとー！"
         }
-          client.reply_message(event['replyToken'], message)
+          # client.reply_message(event['replyToken'], message)
           client.reply_message(event['replyToken'], imessage)
         end
         message = {
