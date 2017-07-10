@@ -14,6 +14,9 @@ def client
 end   
 
 post '/callback' do
+  urls = ['https://pbs.twimg.com/media/DEY9LFsVwAAVE35.jpg',
+          'https://pbs.twimg.com/media/DEY9LE4U0AAUA7e.jpg',
+          'https://pbs.twimg.com/media/DEY9LFrUwAAOWhH.jpg']
   body = request.body.read
   
   #puts body #body出せるかな
@@ -28,23 +31,31 @@ post '/callback' do
     when Line::Bot::Event::Message
       case event.type
       when Line::Bot::Event::MessageType::Text #文章が送られてきた時
+        type = 'text'
         reply = "default"
         case event.message['text']
         when "こんにちは"
           reply = "こんにちは！"
         when /(.*)が終わった.*/, /(.*)ができた.*/, /(.*)が済んだ.*/
           reply =  "#{$1}が終わったのね、すごい！"
+        when "画像で応援して"
+          url = urls[rand(3)]
+          imessage = {
+            type: 'image',
+            originalContentUrl: url,
+            previewImageUrl: url
+          }
+        message = {
+          type: 'text',
+          text: "ふぁいとー！"
+        }
+          # client.reply_message(event['replyToken'], message)
+          client.reply_message(event['replyToken'], imessage)
         end
         message = {
           type: 'text',
           text: reply
         }
-
-        pmessage = {
-          type: 'text',
-          text: "push!"
-        }
-
 
         #puts message #message出せるかな
         #puts event.message['text'] #送られてきたメッセージ
