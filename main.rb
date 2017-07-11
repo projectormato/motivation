@@ -51,6 +51,13 @@ post '/callback' do
         }
           # client.reply_message(event['replyToken'], message)
           client.reply_message(event['replyToken'], imessage)
+        when "声で応援して"
+          message = {
+            type: 'audio',
+            originalContentUrl: 'https://projectormato.github.io/test.m4a',
+            duration: 10000
+          }
+          client.reply_message(event['replyToken'], message)
         end
         message = {
           type: 'text',
