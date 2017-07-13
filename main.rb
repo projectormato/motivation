@@ -35,6 +35,11 @@ post '/callback' do
                'よく頑張ったね',
                'お疲れ様！！',
                'さっすがー！']
+  scold_texts = #叱る言葉
+              ['ダメじゃない！次はしっかりね？',
+               '冗談でしょ？応援してるから、しっかりして？',
+               'あら･･･次はがんばろうね',
+               '仕方ないね、無理せずコツコツいこう！']
   body = request.body.read
   
   #puts body #body出せるかな
@@ -114,10 +119,10 @@ end
 
 post '/push' do
   id = ENV['UserId']
-
+  ptext = Time.now.month.to_s + "月"+ Time.now.hour.to_s + "日" + (Time.now.hour+1).to_s + "時までのタスク、終わった？" 
   pmessage = {
           type: 'text',
-          text: "今日のタスクは、ToDoです。応援してる！！"
+          text: ptext
   }
   client.push_message(id, pmessage)
 end 
