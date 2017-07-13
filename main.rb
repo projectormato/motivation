@@ -83,7 +83,7 @@ post '/callback' do
           client.reply_message(event['replyToken'], message)
         when /.*応援.*/, /.*辛い.*/, /.*つらい.*/, /.*大変.*/, /.*やばい.*/, /.*助けて.*/, /.*無理.*/, /.*むり.*/
           reply = aid_texts[rand(aid_texts.length)]
-        when /.*褒めて.*/,/.*ほめて.*/,/.*頑張.*/, /.*がんば.*/, /.*上手く.*/
+        when /.*褒めて.*/,/.*ほめて.*/,/.*頑張.*/, /.*がんば.*/, /.*上手く.*/,/.*終わった.*/
           reply = praise_texts[rand(praise_texts.length)]
         when /.*終わってない.*/, /.*おわってない.*/, /.*出来てない.*/, /.*できてない.*/, /.*済んでない.*/
           reply = scold_texts[rand(scold_texts.length)]
