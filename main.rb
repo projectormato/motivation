@@ -29,7 +29,10 @@ post '/callback' do
               ['愛してるよ',
                'さすが！',
                '素晴らしい！！',
-               'すごい！']
+               'すごい！',
+               'いいね！',
+               'ナイス！',
+               'よく頑張ったね']
   body = request.body.read
   
   #puts body #body出せるかな
@@ -71,8 +74,10 @@ post '/callback' do
             duration: 10000
           }
           client.reply_message(event['replyToken'], message)
-        when /.*応援.*/, /.*辛い.*/, /.*大変.*/, /.*やばい.*/, /.*助けて.*/, /.*無理.*/
+        when /.*応援.*/, /.*辛い.*/, /.*つらい.*/, /.*大変.*/, /.*やばい.*/, /.*助けて.*/, /.*無理.*/, /.*むり.*/
           reply = aid_texts[rand(aid_texts.length)]
+        when /.*褒めて.*/,/.*ほめて.*/,/.*頑張った.*/,/.*上手く.*/,
+          reply = praise_texts[rand(praise_texts.length)]
         end
         message = {
           type: 'text',
