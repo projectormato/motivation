@@ -32,7 +32,9 @@ post '/callback' do
                'すごい！',
                'いいね！',
                'ナイス！',
-               'よく頑張ったね']
+               'よく頑張ったね',
+               'お疲れ様！！',
+               'さっすがー！']
   body = request.body.read
   
   #puts body #body出せるかな
