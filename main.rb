@@ -93,6 +93,8 @@ post '/callback' do
           reply = praise_texts[rand(praise_texts.length)]
         when /.*終わってない.*/, /.*おわってない.*/, /.*出来てない.*/, /.*できてない.*/, /.*済んでない.*/
           reply = scold_texts[rand(scold_texts.length)]
+        when "ありがとう"
+          reply = "うん！またいつでも声かけてね！"            
         end
         message = {
           type: 'text',
@@ -102,6 +104,8 @@ post '/callback' do
         #puts message #message出せるかな
         #puts event.message['text'] #送られてきたメッセージ
         # client.push_message(event['source']['userId'], pmessage)
+        client.reply_message(event['replyToken'], message)
+        
         if rand(5) == 0          
           url = urls[rand(urls.length)]
           imessage = {
@@ -111,7 +115,6 @@ post '/callback' do
           }
           client.push_message(event['source']['userId'], imessage)
         end
-        client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video #画像やビデオが送られてきたとき
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
