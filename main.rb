@@ -85,6 +85,8 @@ post '/callback' do
           reply = aid_texts[rand(aid_texts.length)]
         when /.*褒めて.*/,/.*ほめて.*/,/.*頑張.*/, /.*がんば.*/, /.*上手く.*/
           reply = praise_texts[rand(praise_texts.length)]
+        when /.*終わってない.*/, /.*おわってない.*/, /.*出来てない.*/, /.*できてない.*/, /.*済んでない.*/
+          reply = scold_texts[rand(scold_texts.length)]
         end
         message = {
           type: 'text',
