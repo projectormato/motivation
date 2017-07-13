@@ -19,16 +19,16 @@ post '/callback' do
          'https://pbs.twimg.com/media/DEY9LE4U0AAUA7e.jpg',
          'https://pbs.twimg.com/media/DEY9LFrUwAAOWhH.jpg']
   aid_texts = # 応援する言葉
-           ['愛してるよ'
-            'よく頑張ってるね、もう一息！'
-            'あなたは出来る人！'
-            'ちょっと休憩しよう？'
-            '頑張れ！ファイト！！'
+           ['愛してるよ',
+            'よく頑張ってるね、もう一息！',
+            'あなたは出来る人！',
+            'ちょっと休憩しよう？',
+            '頑張れ！ファイト！！',
             '頑張ってください！！！！！']
   praise_texts = #褒める言葉
-              ['愛してるよ'
-               'さすが！'
-               '素晴らしい！！'
+              ['愛してるよ',
+               'さすが！',
+               '素晴らしい！！',
                'すごい！']
   body = request.body.read
   
