@@ -62,25 +62,31 @@ post '/callback' do
         when /(.*)が終わった.*/, /(.*)ができた.*/, /(.*)が済んだ.*/
           reply =  "#{$1}が終わったのね、すごい！"
         when "画像で応援して"
-          url = urls[rand(3)]
+          url = urls[rand(urls.length)]
           imessage = {
             type: 'image',
             originalContentUrl: url,
             previewImageUrl: url
           }
-        message = {
-          type: 'text',
-          text: "ふぁいとー！"
-        }
-          # client.reply_message(event['replyToken'], message)
+           message = {
+            type: 'text',
+            text: "ふぁいとー！"
+          }
+          client.push_message(event['source']['userId'], message)
           client.reply_message(event['replyToken'], imessage)
         when "声で応援して"
-          message = {
+          vmessage = {
             type: 'audio',
             originalContentUrl: 'https://projectormato.github.io/test.m4a',
             duration: 10000
           }
-          client.reply_message(event['replyToken'], message)
+          message = {
+           type: 'text',
+           text: "ふぁいとー！"
+          }
+
+          client.push_message(event['source']['userId'], message)
+          client.reply_message(event['replyToken'], vmessage)
         when /.*応援.*/, /.*辛い.*/, /.*つらい.*/, /.*大変.*/, /.*やばい.*/, /.*助けて.*/, /.*無理.*/, /.*むり.*/
           reply = aid_texts[rand(aid_texts.length)]
         when /.*褒めて.*/,/.*ほめて.*/,/.*頑張.*/, /.*がんば.*/, /.*上手く.*/,/.*終わった.*/
@@ -96,6 +102,15 @@ post '/callback' do
         #puts message #message出せるかな
         #puts event.message['text'] #送られてきたメッセージ
         # client.push_message(event['source']['userId'], pmessage)
+        if rand(5) == 0          
+          url = urls[rand(urls.length)]
+          imessage = {
+            type: 'image',
+            originalContentUrl: url,
+            previewImageUrl: url
+          }
+          client.push_message(event['source']['userId'], imessage)
+        end
         client.reply_message(event['replyToken'], message)
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video #画像やビデオが送られてきたとき
         response = client.get_message_content(event.message['id'])
