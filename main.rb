@@ -14,9 +14,27 @@ def client
 end   
 
 post '/callback' do
-  urls = ['https://pbs.twimg.com/media/DEY9LFsVwAAVE35.jpg',
-          'https://pbs.twimg.com/media/DEY9LE4U0AAUA7e.jpg',
-          'https://pbs.twimg.com/media/DEY9LFrUwAAOWhH.jpg']
+  urls = #画像のURLたち 
+        ['https://pbs.twimg.com/media/DEY9LFsVwAAVE35.jpg',
+         'https://pbs.twimg.com/media/DEY9LE4U0AAUA7e.jpg',
+         'https://pbs.twimg.com/media/DEY9LFrUwAAOWhH.jpg']
+  aid_texts = # 応援する言葉
+           ['愛してるよ',
+            'よく頑張ってるね、もう一息！',
+            'あなたは出来る人！',
+            'ちょっと休憩しよう？',
+            '頑張れ！ファイト！！',
+            '頑張ってください！！！！！']
+  praise_texts = #褒める言葉
+              ['愛してるよ',
+               'さすが！',
+               '素晴らしい！！',
+               'すごい！',
+               'いいね！',
+               'ナイス！',
+               'よく頑張ったね',
+               'お疲れ様！！',
+               'さっすがー！']
   body = request.body.read
   
   #puts body #body出せるかな
@@ -32,7 +50,7 @@ post '/callback' do
       case event.type
       when Line::Bot::Event::MessageType::Text #文章が送られてきた時
         type = 'text'
-        reply = "default"
+        reply = "応援してる！"
         case event.message['text']
         when "こんにちは"
           reply = "こんにちは！"
@@ -58,6 +76,10 @@ post '/callback' do
             duration: 10000
           }
           client.reply_message(event['replyToken'], message)
+        when /.*応援.*/, /.*辛い.*/, /.*つらい.*/, /.*大変.*/, /.*やばい.*/, /.*助けて.*/, /.*無理.*/, /.*むり.*/
+          reply = aid_texts[rand(aid_texts.length)]
+        when /.*褒めて.*/,/.*ほめて.*/,/.*頑張.*/, /.*がんば.*/, /.*上手く.*/
+          reply = praise_texts[rand(praise_texts.length)]
         end
         message = {
           type: 'text',
