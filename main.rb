@@ -35,6 +35,11 @@ post '/callback' do
                'よく頑張ったね',
                'お疲れ様！！',
                'さっすがー！']
+  scold_texts = #叱る言葉
+              ['ダメじゃない！次はしっかりね？',
+               '冗談でしょ？応援してるから、しっかりして？',
+               'あら･･･次はがんばろうね',
+               '仕方ないね、無理せずコツコツいこう！']
   body = request.body.read
   
   #puts body #body出せるかな
@@ -78,8 +83,10 @@ post '/callback' do
           client.reply_message(event['replyToken'], message)
         when /.*応援.*/, /.*辛い.*/, /.*つらい.*/, /.*大変.*/, /.*やばい.*/, /.*助けて.*/, /.*無理.*/, /.*むり.*/
           reply = aid_texts[rand(aid_texts.length)]
-        when /.*褒めて.*/,/.*ほめて.*/,/.*頑張.*/, /.*がんば.*/, /.*上手く.*/
+        when /.*褒めて.*/,/.*ほめて.*/,/.*頑張.*/, /.*がんば.*/, /.*上手く.*/,/.*終わった.*/
           reply = praise_texts[rand(praise_texts.length)]
+        when /.*終わってない.*/, /.*おわってない.*/, /.*出来てない.*/, /.*できてない.*/, /.*済んでない.*/
+          reply = scold_texts[rand(scold_texts.length)]
         end
         message = {
           type: 'text',
@@ -114,10 +121,10 @@ end
 
 post '/push' do
   id = ENV['UserId']
-
+  ptext = Time.now.month.to_s + "月"+ Time.now.day.to_s + "日" + ((Time.now.hour+10)%24).to_s + "時までのタスク、終わった？"
   pmessage = {
           type: 'text',
-          text: "今日のタスクは、ToDoです。応援してる！！"
+          text: ptext
   }
   client.push_message(id, pmessage)
 end 
