@@ -18,28 +18,31 @@ post '/callback' do
         ['https://pbs.twimg.com/media/DEY9LFsVwAAVE35.jpg',
          'https://pbs.twimg.com/media/DEY9LE4U0AAUA7e.jpg',
          'https://pbs.twimg.com/media/DEY9LFrUwAAOWhH.jpg']
-  aid_texts = # 応援する言葉
-           ['愛してるよ',
-            'よく頑張ってるね、もう一息！',
-            'あなたは出来る人！',
-            'ちょっと休憩しよう？',
-            '頑張れ！ファイト！！',
-            '頑張ってください！！！！！']
-  praise_texts = #褒める言葉
-              ['愛してるよ',
-               'さすが！',
-               '素晴らしい！！',
-               'すごい！',
-               'いいね！',
-               'ナイス！',
-               'よく頑張ったね',
-               'お疲れ様！！',
-               'さっすがー！']
-  scold_texts = #叱る言葉
-              ['ダメじゃない！次はしっかりね？',
-               '冗談でしょ？応援してるから、しっかりして？',
-               'あら･･･次はがんばろうね',
-               '仕方ないね、無理せずコツコツいこう！']
+  # aid_texts = # 応援する言葉
+  #          ['愛してるよ',
+  #           'よく頑張ってるね、もう一息！',
+  #           'あなたは出来る人！',
+  #           'ちょっと休憩しよう？',
+  #           '頑張れ！ファイト！！',
+  #           '頑張ってください！！！！！']
+  aid_texts = ['頑張れ！ファイト！！']
+  # praise_texts = #褒める言葉
+  #             ['愛してるよ',
+  #              'さすが！',
+  #              '素晴らしい！！',
+  #              'すごい！',
+  #              'いいね！',
+  #              'ナイス！',
+  #              'よく頑張ったね',
+  #              'お疲れ様！！',
+  #              'さっすがー！']
+  praise_texts = ['お疲れ様！！']
+  # scold_texts = #叱る言葉
+  #             ['ダメじゃない！次はしっかりね？',
+  #              '冗談でしょ？応援してるから、しっかりして？',
+  #              'あら･･･次はがんばろうね',
+  #              '仕方ないね、無理せずコツコツいこう！']
+  scold_texts = ['冗談でしょ？応援してるから、しっかりして？']
   body = request.body.read
   
   #puts body #body出せるかな
@@ -62,7 +65,7 @@ post '/callback' do
         when /(.*)が終わった.*/, /(.*)ができた.*/, /(.*)が済んだ.*/
           reply =  "#{$1}が終わったのね、すごい！"
         when "画像で応援して"
-          url = urls[rand(urls.length)]
+          url = urls[0]
           imessage = {
             type: 'image',
             originalContentUrl: url,
@@ -87,10 +90,21 @@ post '/callback' do
 
           client.push_message(event['source']['userId'], message)
           client.reply_message(event['replyToken'], vmessage)
-        when /.*応援.*/, /.*辛い.*/, /.*つらい.*/, /.*大変.*/, /.*やばい.*/, /.*助けて.*/, /.*無理.*/, /.*むり.*/
+        when /.*応援して.*/
           reply = aid_texts[rand(aid_texts.length)]
         when /.*褒めて.*/,/.*ほめて.*/,/.*頑張.*/, /.*がんば.*/, /.*上手く.*/,/.*終わった.*/
-          reply = praise_texts[rand(praise_texts.length)]
+          url = urls[1]
+          imessage = {
+            type: 'image',
+            originalContentUrl: url,
+            previewImageUrl: url
+          }
+           message = {
+            type: 'text',
+            text: "お疲れ様！！"
+          }
+          client.push_message(event['source']['userId'], message)
+          client.reply_message(event['replyToken'], imessage)          
         when /.*終わってない.*/, /.*おわってない.*/, /.*出来てない.*/, /.*できてない.*/, /.*済んでない.*/
           reply = scold_texts[rand(scold_texts.length)]
         when "ありがとう"
@@ -106,15 +120,6 @@ post '/callback' do
         # client.push_message(event['source']['userId'], pmessage)
         client.reply_message(event['replyToken'], message)
         
-        if rand(5) == 0          
-          url = urls[rand(urls.length)]
-          imessage = {
-            type: 'image',
-            originalContentUrl: url,
-            previewImageUrl: url
-          }
-          client.push_message(event['source']['userId'], imessage)
-        end
       when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video #画像やビデオが送られてきたとき
         response = client.get_message_content(event.message['id'])
         tf = Tempfile.open("content")
