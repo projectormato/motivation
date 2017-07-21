@@ -144,7 +144,7 @@ end
 
 post '/push' do
   id = ENV['UserId']
-  ptext = Time.now.month.to_s + "月"+ Time.now.day.to_s + "日" + ((Time.now.hour+10)%24).to_s + "時までのタスク、終わった？"
+  ptext = Time.now.month.to_s + "月"+ Time.now.day.to_s + "日" + ((Time.now.hour+10)%24).to_s + "時までの最終発表、終わった？"
   pmessage = {
           type: 'text',
           text: ptext
