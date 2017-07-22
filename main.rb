@@ -93,6 +93,7 @@ post '/callback' do
           text: reply
         }
 
+        "ここ通ったで"
         #puts message #message出せるかな
         #puts event.message['text'] #送られてきたメッセージ
         # client.push_message(event['source']['userId'], pmessage)
@@ -119,12 +120,12 @@ post '/callback' do
   "OK"
 end
 
-post '/push' do
-  id = ENV['UserId']
-  ptext = Time.now.month.to_s + "月"+ Time.now.day.to_s + "日" + ((Time.now.hour+10)%24).to_s + "時までのタスク、終わった？"
-  pmessage = {
-          type: 'text',
-          text: ptext
-  }
-  client.push_message(id, pmessage)
-end 
+# post '/push' do
+#   id = ENV['UserId']
+#   ptext = Time.now.month.to_s + "月"+ Time.now.day.to_s + "日" + ((Time.now.hour+10)%24).to_s + "時までのタスク、終わった？"
+#   pmessage = {
+#           type: 'text',
+#           text: ptext
+#   }
+#   client.push_message(id, pmessage)
+# end 
