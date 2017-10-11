@@ -63,7 +63,7 @@ post '/callback' do
         when /(.*)が終わった.*/, /(.*)ができた.*/, /(.*)が済んだ.*/
           reply =  "#{$1}が終わったのね、すごい！"
         when "画像で応援して"
-          url = urls[urls.size]
+          url = urls[rand(urls.size)]
           imessage = {
             type: 'image',
             originalContentUrl: url,
