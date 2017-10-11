@@ -15,9 +15,9 @@ end
 
 post '/callback' do
   urls = #画像のURLたち 
-        ['https://pbs.twimg.com/media/DEY9LFsVwAAVE35.jpg',
-         'https://pbs.twimg.com/media/DEY9LE4U0AAUA7e.jpg',
-         'https://pbs.twimg.com/media/DEY9LFrUwAAOWhH.jpg',
+        [#'https://pbs.twimg.com/media/DEY9LFsVwAAVE35.jpg',
+         #'https://pbs.twimg.com/media/DEY9LE4U0AAUA7e.jpg',
+         'https://pbs.twimg.com/media/DL3N2v2UEAAO_9_.jpg',
          'https://pbs.twimg.com/media/DL3N2vrVAAAFsfY.jpg']
   aid_texts = # 応援する言葉
            ['愛してるよ',
@@ -63,7 +63,7 @@ post '/callback' do
         when /(.*)が終わった.*/, /(.*)ができた.*/, /(.*)が済んだ.*/
           reply =  "#{$1}が終わったのね、すごい！"
         when "画像で応援して"
-          url = urls[3]
+          url = urls[urls.size]
           imessage = {
             type: 'image',
             originalContentUrl: url,
