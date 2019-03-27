@@ -2,23 +2,23 @@ GEM
   remote: https://rubygems.org/
   specs:
     line-bot-api (1.2.0)
-    mustermann (1.0.0)
-    rack (2.0.3)
-    rack-protection (2.0.0)
+    mustermann (1.0.3)
+    rack (2.0.6)
+    rack-protection (2.0.5)
       rack
-    sinatra (2.0.0)
+    sinatra (2.0.5)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.0)
+      rack-protection (= 2.0.5)
       tilt (~> 2.0)
-    tilt (2.0.7)
+    tilt (2.0.9)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   line-bot-api
-  sinatra
+  sinatra (>= 2.0.2)
 
 BUNDLED WITH
-   1.15.0
+   1.16.1
